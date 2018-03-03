@@ -15,9 +15,12 @@ from agents.imitation.imitation_learning_network import load_imitation_learning_
 
 class ImitationLearning(Agent):
 
-    def __init__(self, city_name, memory_fraction=0.25, image_cut=[115, 510]):
+    def __init__(self, city_name, f_i, memory_fraction=0.25, image_cut=[115, 510]):
 
         Agent.__init__(self, city_name)
+
+        #Fault Injector
+        self.f_i = f_i
 
         self.dropout_vec = [1.0] * 8 + [0.7] * 2 + [0.5] * 2 + [0.5] * 1 + [0.5, 1.] * 5
 
@@ -82,6 +85,9 @@ class ImitationLearning(Agent):
         return ckpt
 
     def run_step(self, measurements, sensor_data, target):
+        
+        #Fault Inject on sensor_data
+        sensor_data = self.f_i.corruptSensors(sensor_data)
 
         direction = self._planner.get_next_command(
             (measurements.player_measurements.transform.location.x,
@@ -95,6 +101,8 @@ class ImitationLearning(Agent):
         control = self._compute_action(sensor_data['CameraRGB'].data,
                                        measurements.player_measurements.forward_speed, direction)
 
+        #Fault Inject on Control_data
+        control = self.f_i.corruptControls(control)
         return control
 
     def _compute_action(self, rgb_image, speed, direction=None):

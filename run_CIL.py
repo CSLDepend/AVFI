@@ -2,6 +2,9 @@ import argparse
 import logging
 import sys
 
+#Fault Injector Class
+from agents.imitation.fault_injector import FaultInjector
+
 from carla.benchmarks.corl_2017 import CoRL2017
 
 from carla.tcp import TCPConnectionError
@@ -52,8 +55,9 @@ if (__name__ == '__main__'):
     logging.basicConfig(format='%(levelname)s: %(message)s', level=log_level)
 
     logging.info('listening to server %s:%s', args.host, args.port)
-
-    agent = ImitationLearning(args.city_name)
+    
+    f_i = FaultInjector()
+    agent = ImitationLearning(args.city_name,f_i)
 
     while True:
         try:
