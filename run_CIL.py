@@ -53,13 +53,19 @@ if (__name__ == '__main__'):
         help='The name of the log file to be created by the scripts'
     )
 
+    argparser.add_argument(
+         '--avoid-stopping',
+        action='store_true',
+        help=' Uses the speed prediction branch to avoid unwanted agent stops'
+    )
+
     args = argparser.parse_args()
 
     log_level = logging.DEBUG if args.debug else logging.INFO
     logging.basicConfig(format='%(levelname)s: %(message)s', level=log_level)
 
     logging.info('listening to server %s:%s', args.host, args.port)
-    
+
     agent = ImitationLearning(args.city_name)
     #Test Parameters
     #WaterDrop(300,400,100,100,2.0,2.0),TransparentOcclusion(200,300,200,200),
