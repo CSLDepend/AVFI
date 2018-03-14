@@ -4,6 +4,8 @@ import sys
 
 #Fault Injector Class
 from agents.imitation.fault_injector import FaultInjector
+#Camera Fault Model Class
+from agents.imitation.camera_fault_model import *
 
 from carla.benchmarks.corl_2017 import CoRL2017
 
@@ -56,7 +58,9 @@ if (__name__ == '__main__'):
 
     logging.info('listening to server %s:%s', args.host, args.port)
     
-    f_i = FaultInjector()
+    #Do nothing Camera Fault Model
+    cfm = TransparentOcclusion(200,300,200,200)
+    f_i = FaultInjector(cfm)
     agent = ImitationLearning(args.city_name,f_i)
 
     while True:
