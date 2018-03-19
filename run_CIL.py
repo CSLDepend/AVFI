@@ -59,7 +59,8 @@ if (__name__ == '__main__'):
     logging.info('listening to server %s:%s', args.host, args.port)
     
     #Do nothing Camera Fault Model
-    cfm = TransparentOcclusion(200,300,200,200)
+    #cfm = TransparentOcclusion(200,300,200,200)
+    cfm = WaterDrop(300,400,150,150,2.0,2.0)
     f_i = FaultInjector(cfm)
     agent = ImitationLearning(args.city_name,f_i)
 
