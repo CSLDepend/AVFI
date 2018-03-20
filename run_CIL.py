@@ -6,6 +6,8 @@ import sys
 from agents.imitation.fault_injector import FaultInjector
 #Camera Fault Model Class
 from agents.imitation.camera_fault_model import *
+#Custom Benchmark Class
+from UIUC_FI_Benchmark import *
 
 from carla.benchmarks.corl_2017 import CoRL2017
 
@@ -58,27 +60,34 @@ if (__name__ == '__main__'):
 
     logging.info('listening to server %s:%s', args.host, args.port)
     
-    #Do nothing Camera Fault Model
-    #cfm = TransparentOcclusion(200,300,200,200)
-    cfm = WaterDrop(300,400,150,150,2.0,2.0)
-    f_i = FaultInjector(cfm)
-    agent = ImitationLearning(args.city_name,f_i)
+    agent = ImitationLearning(args.city_name)
+    #Test Parameters
+    f_i_list=[WaterDrop(300,400,100,100,2.0,2.0),TransparentOcclusion(200,300,200,200),PassThrough()]
+    path_types=[True,False,False]
+    path_cases=[1,0,0]
+    weather_list=[1]
+    #Vehicle and ppl_density lists should be of the same length
+    vehicle_density=[50]
+    ppl_density=[50]
 
-    while True:
-        try:
-
-            with make_carla_client(args.host, args.port) as client:
-                corl = CoRL2017(args.city_name, args.log_name)
-
-                results = corl.benchmark_agent(agent, client)
-                corl.plot_summary_test()
-                corl.plot_summary_train()
-
-                break
-
-        except TCPConnectionError as error:
-            logging.error(error)
-            time.sleep(1)
-        except Exception as exception:
-            logging.exception(exception)
-            sys.exit(1)
+    for cfm in f_i_list:
+        print("TOP_LEVEL_DEBUG:",args.city_name,cfm.get_name())
+        f_i=FaultInjector(cfm,args.city_name)
+        agent.set_f_i(f_i)
+        while True:
+            try:
+                with make_carla_client(args.host, args.port) as client:
+                    uiuc_fi = UIUC_FI_Benchmark(args.city_name, args.log_name,f_i,path_types,
+                            path_cases,weather_list,vehicle_density,ppl_density)
+                    results = uiuc_fi.benchmark_agent(agent, client)
+                    uiuc_fi.plot_summary_test()
+                    uiuc_fi.plot_summary_train()
+                    break
+            except TCPConnectionError as error:
+                logging.error(error)
+                time.sleep(1)
+            except Exception as exception:
+                logging.exception(exception)
+                sys.exit(1)
+        f_i.saveVideo()
+        del(f_i)

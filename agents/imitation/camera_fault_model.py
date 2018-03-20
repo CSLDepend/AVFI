@@ -1,10 +1,15 @@
 import numpy as np
 
 class CameraFaultModel(object):
+    def get_name(self):
+        pass
     def inject(self,InputImage):
         pass
 
 class PassThrough(CameraFaultModel):
+    def get_name(self):
+        return 'PassThrough'
+
     def inject(self,InputImage):
         return InputImage
 
@@ -23,6 +28,9 @@ class SolidOcclusion(Occlusion):
         self.x_max=self.x+dx_in
         self.y_max=self.y+dy_in
 
+    def get_name(self):
+        return 'SolidOcclusion'
+
     def mod_fn(self,InputImage):
         InputImage[self.x:self.x_max,self.y:self.y_max,:] = 0
         return InputImage
@@ -33,6 +41,9 @@ class TransparentOcclusion(Occlusion):
         self.y=y_in
         self.x_max=self.x+dx_in
         self.y_max=self.y+dy_in
+
+    def get_name(self):
+        return 'TransparentOcclusion'
 
     def mod_fn(self,InputImage):
         InputImage[self.x:self.x_max,self.y:self.y_max,:] = InputImage[self.x:self.x_max,self.y:self.y_max,:]*0.5
@@ -49,6 +60,9 @@ class SaltAndPepper(Noise):
     def __init__(self,s_vs_pIn=0.5,amountIn=0.004):
         self.s_vs_p = s_vs_pIn
         self.amount = amountIn
+
+    def get_name(self):
+        return 'SaltAndPepper'
 
     def mod_fn(self,InputImage):
         row,col,ch = InputImage.shape
@@ -72,6 +86,9 @@ class Gaussian(Noise):
         self.mean = meanIn
         self.var = varIn
 
+    def get_name(self):
+        return 'Gaussian'
+
     def mod_fn(self,InputImage):
         row,col,ch= InputImage.shape
         mean = self.mean
@@ -84,6 +101,9 @@ class Gaussian(Noise):
         return noisy.astype(np.uint8)
 
 class Poisson(Noise):
+    def get_name(self):
+        return 'Poisson'
+
     def mod_fn(self,InputImage):
         vals = len(np.unique(InputImage))
         vals = 2 ** np.ceil(np.log2(vals))
@@ -91,6 +111,9 @@ class Poisson(Noise):
         return noisy.astype(np.uint8)
 
 class Speckle(Noise):
+    def get_name(self):
+        return 'Speckle'
+
     def mod_fn(self,InputImage):
         row,col,ch = InputImage.shape
         gauss = np.random.randn(row,col,ch)
@@ -108,6 +131,9 @@ class WaterDrop(Occlusion):
         self.w=w_in
         self.xR=xR_in
         self.yR=yR_in
+
+    def get_name(self):
+        return 'WaterDrop'
 
     def mod_fn(self,InputImage):
         x_range = range(int(self.x_c - self.h/2),int(np.ceil(self.x_c + self.h/2)+1)) #Rows

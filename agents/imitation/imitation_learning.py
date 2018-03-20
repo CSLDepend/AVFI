@@ -15,12 +15,12 @@ from agents.imitation.imitation_learning_network import load_imitation_learning_
 
 class ImitationLearning(Agent):
 
-    def __init__(self, city_name, f_i, memory_fraction=0.25, image_cut=[115, 510]):
+    def __init__(self, city_name, memory_fraction=0.25, image_cut=[115, 510]):
 
         Agent.__init__(self, city_name)
 
         #Fault Injector
-        self.f_i = f_i
+        self.f_i = None
 
         self.dropout_vec = [1.0] * 8 + [0.7] * 2 + [0.5] * 2 + [0.5] * 1 + [0.5, 1.] * 5
 
@@ -65,6 +65,9 @@ class ImitationLearning(Agent):
         self.load_model()
 
         self._image_cut = image_cut
+    
+    def set_f_i(self,f_i):
+        self.f_i=f_i
 
     def load_model(self):
 
