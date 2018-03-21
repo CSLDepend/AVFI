@@ -56,6 +56,7 @@ if (__name__ == '__main__'):
     argparser.add_argument(
          '--avoid-stopping',
         action='store_true',
+        default=True,
         help=' Uses the speed prediction branch to avoid unwanted agent stops'
     )
 
@@ -66,7 +67,7 @@ if (__name__ == '__main__'):
 
     logging.info('listening to server %s:%s', args.host, args.port)
 
-    agent = ImitationLearning(args.city_name)
+    agent = ImitationLearning(args.city_name,args.avoid_stopping)
     #Test Parameters
     #WaterDrop(300,400,100,100,2.0,2.0),TransparentOcclusion(200,300,200,200),
     f_i_list=[PassThrough()]
