@@ -62,10 +62,11 @@ if (__name__ == '__main__'):
     
     agent = ImitationLearning(args.city_name)
     #Test Parameters
-    f_i_list=[WaterDrop(300,400,100,100,2.0,2.0),TransparentOcclusion(200,300,200,200),PassThrough()]
+    #WaterDrop(300,400,100,100,2.0,2.0),TransparentOcclusion(200,300,200,200),
+    f_i_list=[PassThrough()]
     path_types=[True,False,False]
     path_cases=[1,0,0]
-    weather_list=[1]
+    weather_list=[1,3]
     #Vehicle and ppl_density lists should be of the same length
     vehicle_density=[50]
     ppl_density=[50]
@@ -80,8 +81,7 @@ if (__name__ == '__main__'):
                     uiuc_fi = UIUC_FI_Benchmark(args.city_name, args.log_name,f_i,path_types,
                             path_cases,weather_list,vehicle_density,ppl_density)
                     results = uiuc_fi.benchmark_agent(agent, client)
-                    uiuc_fi.plot_summary_test()
-                    uiuc_fi.plot_summary_train()
+                    uiuc_fi._plot_summary(weather_list)
                     break
             except TCPConnectionError as error:
                 logging.error(error)

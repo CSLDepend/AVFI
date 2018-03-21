@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import numpy as np
-import atexit
 import copy
 import os
 #Update this path to point to ffmpeg.exe

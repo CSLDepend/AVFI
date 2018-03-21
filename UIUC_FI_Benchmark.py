@@ -1,4 +1,5 @@
 from carla.benchmarks.corl_2017 import *
+import csv
 
 class UIUC_FI_Benchmark(CoRL2017):
     def __init__(self,city_name,name_to_save,f_i_in,path_types_in,path_cases_in,weather_list,veh_tasks,ppl_tasks):
@@ -100,4 +101,101 @@ class UIUC_FI_Benchmark(CoRL2017):
     def _get_details(self):
         # Function to get automatic information from the experiment for writing purposes
         return 'uiuc_fi_2018_' + self._city_name + '_' + self.f_i.get_injector_name()
-        
+
+    @staticmethod
+    def _get_experiments_names(experiments):
+
+        name_cat = 'w'
+        unique_weathers =list(set([x.Conditions.WeatherId for x in experiments]))
+        unique_weathers.sort()
+        for weather in unique_weathers:
+            name_cat += str(weather) + '.'
+
+        return name_cat
+
+    def _write_summary_results(self, experiment, pose, rep,
+                               path_distance, remaining_distance,
+                               final_time, time_out, result):
+
+        self._dict_stats['exp_id'] = experiment.id
+        self._dict_stats['rep'] = rep
+        self._dict_stats['weather'] = experiment.Conditions.WeatherId
+        self._dict_stats['start_point'] = pose[0]
+        self._dict_stats['end_point'] = pose[1]
+        self._dict_stats['result'] = result
+        self._dict_stats['initial_distance'] = path_distance
+        self._dict_stats['final_distance'] = remaining_distance
+        self._dict_stats['final_time'] = final_time
+        self._dict_stats['time_out'] = time_out
+        #Added two new fields
+        self._dict_stats['vehicles'] = experiment.Conditions.NumberOfVehicles
+        self._dict_stats['pedestrians'] = experiment.Conditions.NumberOfPedestrians
+        #End of modification
+
+        with open(os.path.join(self._full_name, self._suffix_name), 'a+') as ofd:
+
+            w = csv.DictWriter(ofd, self._dict_stats.keys())
+
+            w.writerow(self._dict_stats)
+
+    def _write_details_results(self, experiment, rep, reward_vec):
+
+        with open(os.path.join(self._full_name,
+                               'details_' + self._suffix_name), 'a+') as rfd:
+
+            rw = csv.DictWriter(rfd, self._dict_rewards.keys())
+
+            for i in range(len(reward_vec)):
+                self._dict_rewards['exp_id'] = experiment.id
+                self._dict_rewards['rep'] = rep
+                self._dict_rewards['weather'] = experiment.Conditions.WeatherId
+                self._dict_rewards['collision_gen'] = reward_vec[
+                    i].collision_other
+                self._dict_rewards['collision_ped'] = reward_vec[
+                    i].collision_pedestrians
+                self._dict_rewards['collision_car'] = reward_vec[
+                    i].collision_vehicles
+                self._dict_rewards['lane_intersect'] = reward_vec[
+                    i].intersection_otherlane
+                self._dict_rewards['sidewalk_intersect'] = reward_vec[
+                    i].intersection_offroad
+                self._dict_rewards['pos_x'] = reward_vec[
+                    i].transform.location.x
+                self._dict_rewards['pos_y'] = reward_vec[
+                    i].transform.location.y
+                #Added two new fields
+                self._dict_rewards['vehicles'] = experiment.Conditions.NumberOfVehicles
+                self._dict_rewards['pedestrians'] = experiment.Conditions.NumberOfPedestrians
+                #End of modification
+
+                rw.writerow(self._dict_rewards)
+
+    #Modified to write summary to a file as well
+    def _plot_summary(self, weathers):
+        """
+        We plot the summary of the testing for the set selected weathers.
+        The test weathers are [4,14]
+
+        """
+
+        metrics_summary = compute_summary(os.path.join(
+            self._full_name, self._suffix_name), [3])
+        summary_f = open(os.path.join(self._full_name,self._suffix_name+'summary'), 'w')
+
+        for metric, values in metrics_summary.items():
+
+            print('Metric : ', metric)
+            summary_f.write('Metric : ' + str(metric)+"\n")
+            for weather, tasks in values.items():
+                if weather in set(weathers):
+                    print('  Weather: ', weather)
+                    summary_f.write('  Weather: ' + str(weather)+"\n")
+                    count = 0
+                    for t in tasks:
+                        print('    Task ', count, ' -> ', t)
+                        summary_f.write('    Task '+ str(count) +' -> '+str(t)+"\n")
+                        count += 1
+
+                    print('    AvG  -> ', float(sum(tasks)) / float(len(tasks)))
+                    summary_f.write('    AvG  -> '+ str(float(sum(tasks)) / float(len(tasks)))+"\n")
+        summary_f.close()
