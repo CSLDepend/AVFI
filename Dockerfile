@@ -23,7 +23,7 @@ RUN sed -i.bak s/pygame//g carla/PythonClient/requirements.txt
 RUN python -m easy_install pip && \
     python -m pip install pygame && \
     conda install --yes --file carla/PythonClient/requirements.txt && \
-    cd carla/PythonClient && \
+    cd carla/PythonClient && git checkout 69f7e8e && \
     python setup.py build && python setup.py install
 
 # Add CIL project into the container
