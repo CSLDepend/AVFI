@@ -15,7 +15,7 @@ RUN curl -LO https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-ppc64le
     rm Miniconda3-latest-Linux-ppc64le.sh
 ENV PATH=/miniconda/bin:${PATH}
 RUN conda update -y conda && \
-    conda install -y tensorflow
+    conda install -y tensorflow-gpu scipy
 
 # Install CARLA agent
 RUN git clone https://github.com/carla-simulator/carla.git
