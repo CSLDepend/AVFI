@@ -70,10 +70,10 @@ if (__name__ == '__main__'):
     agent = ImitationLearning(args.city_name,args.avoid_stopping)
     #Test Parameters
     #WaterDrop(300,400,100,100,2.0,2.0),TransparentOcclusion(200,300,200,200),
-    f_i_list=[PassThrough()]
+    f_i_list=[WaterDrop(300,400,100,100,2.0,2.0)]
     path_types=[True,False,False]
     path_cases=[1,0,0]
-    weather_list=[1,3]
+    weather_list=[1]
     #Vehicle and ppl_density lists should be of the same length
     vehicle_density=[50]
     ppl_density=[50]

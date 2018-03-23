@@ -1,10 +1,14 @@
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import numpy as np
 import copy
 import os
+import sys
 #Update this path to point to ffmpeg.exe
-plt.rcParams['animation.ffmpeg_path'] = "E:\\ffmpeg\\bin\\ffmpeg.exe"
+if sys.platform.startswith('win'):
+    plt.rcParams['animation.ffmpeg_path'] = "E:\\ffmpeg\\bin\\ffmpeg.exe"
 #Matplotlib animation
 
 class FaultInjector(object):
