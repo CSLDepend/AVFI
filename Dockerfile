@@ -21,6 +21,7 @@ RUN conda update -y conda && \
 RUN git clone https://github.com/carla-simulator/carla.git
 RUN sed -i.bak s/pygame//g carla/PythonClient/requirements.txt
 RUN sed -i.bak s/rb/r/g carla/PythonClient/carla/benchmarks/metrics.py
+RUN sed -i.bak 's/header_details\[\-1\]\[\:\-2\]/header_details\[\-1\]\[\:\-1\]/g' carla/PythonClient/carla/benchmarks/metrics.py
 RUN python -m easy_install pip && \
     python -m pip install pygame && \
     conda install --yes --file carla/PythonClient/requirements.txt && \
