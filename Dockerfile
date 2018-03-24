@@ -27,3 +27,4 @@ RUN python -m easy_install pip && \
     conda install --yes --file carla/PythonClient/requirements.txt && \
     cd carla/PythonClient && git checkout tags/0.7.1 && \
     python setup.py build && python setup.py install
+WORKDIR /av_il_fi
