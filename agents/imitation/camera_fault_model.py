@@ -184,8 +184,8 @@ class WaterDrop(Occlusion):
         self.inject_counter=0
 
     def create_new_droplet(self):
-        self.x_c = np.random.randint(100,max_camera_h-51)
-        self.y_c = np.random.randint(100,max_camera_w-51)
+        self.x_c = np.random.randint(102,max_camera_h-52)
+        self.y_c = np.random.randint(102,max_camera_w-52)
         self.h = np.random.randint(50,min(max_camera_h-self.x_c,self.x_c/2,300))
         self.w = np.random.randint(50,min(max_camera_w-self.y_c,self.y_c/2,300))
 
