@@ -25,5 +25,5 @@ RUN sed -i.bak 's/header_details\[\-1\]\[\:\-2\]/header_details\[\-1\]\[\:\-1\]/
 RUN python -m easy_install pip && \
     python -m pip install pygame && \
     conda install --yes --file carla/PythonClient/requirements.txt && \
-    cd carla/PythonClient && git checkout de89245 && \
+    cd carla/PythonClient && git checkout tags/0.7.1 && \
     python setup.py build && python setup.py install
