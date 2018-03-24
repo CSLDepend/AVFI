@@ -20,6 +20,7 @@ RUN conda update -y conda && \
 # Install CARLA agent
 RUN git clone https://github.com/carla-simulator/carla.git
 RUN sed -i.bak s/pygame//g carla/PythonClient/requirements.txt
+RUN sed -i.bak s/rb/r/g carla/PythonClient/carla/benchmarks/metrics.py
 RUN python -m easy_install pip && \
     python -m pip install pygame && \
     conda install --yes --file carla/PythonClient/requirements.txt && \
