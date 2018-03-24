@@ -24,8 +24,5 @@ RUN sed -i.bak s/rb/r/g carla/PythonClient/carla/benchmarks/metrics.py
 RUN python -m easy_install pip && \
     python -m pip install pygame && \
     conda install --yes --file carla/PythonClient/requirements.txt && \
-    cd carla/PythonClient && git checkout 69f7e8e && \
+    cd carla/PythonClient && git checkout de89245 && \
     python setup.py build && python setup.py install
-
-# Add CIL project into the container
-COPY . /av-il-fi
