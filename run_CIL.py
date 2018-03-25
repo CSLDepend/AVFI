@@ -76,8 +76,8 @@ if (__name__ == '__main__'):
     path_cases=[10,10,10]
     weather_list=[1, 3, 6, 8]
     #Vehicle and ppl_density lists should be of the same length
-    vehicle_density=[200]
-    ppl_density=[200]
+    vehicle_density=[20]
+    ppl_density=[50]
 
     for cfm in f_i_list:
         print("TOP_LEVEL_DEBUG:",args.city_name,cfm.get_name())
