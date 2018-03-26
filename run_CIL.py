@@ -56,8 +56,15 @@ if (__name__ == '__main__'):
     argparser.add_argument(
          '--avoid-stopping',
         action='store_true',
-        default=True,
+        default=False,
         help=' Uses the speed prediction branch to avoid unwanted agent stops'
+    )
+
+    argparser.add_argument(
+         '--dump-dashcam',
+        action='store_true',
+        default=False,
+        help=' Dumps the fault injected dash cam to an mp4 video'
     )
 
     args = argparser.parse_args()
@@ -81,7 +88,7 @@ if (__name__ == '__main__'):
 
     for cfm in f_i_list:
         print("TOP_LEVEL_DEBUG:",args.city_name,cfm.get_name())
-        f_i=FaultInjector(cfm,args.city_name)
+        f_i=FaultInjector(cfm,args.city_name,args.dump_dashcam)
         agent.set_f_i(f_i)
         while True:
             try:
@@ -97,5 +104,6 @@ if (__name__ == '__main__'):
             except Exception as exception:
                 logging.exception(exception)
                 sys.exit(1)
-        f_i.saveVideo()
+        if(args.dump_dashcam==True):
+            f_i.saveVideo()
         del(f_i)

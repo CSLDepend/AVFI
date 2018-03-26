@@ -12,12 +12,14 @@ if sys.platform.startswith('win'):
 #Matplotlib animation
 
 class FaultInjector(object):
-    def __init__(self,input_fm_in,city):
+    def __init__(self,input_fm_in,city,dashcam_vid):
         self.input_fm = input_fm_in
         self.city=city
         #Animation
-        self.ims=[]
-        self.fig = plt.figure()
+        self.dashcam_vid = dashcam_vid
+        if(self.dashcam_vid==True):
+            self.ims=[]
+            self.fig = plt.figure()
 
     def get_injector_name(self):
         return self.input_fm.get_name()
@@ -27,7 +29,8 @@ class FaultInjector(object):
 
     def corruptSensors(self,sensor_data):
         sensor_data['CameraRGB']._converted_data=self.input_fm.inject(sensor_data['CameraRGB'].data)
-        self.ims.append([plt.imshow(sensor_data['CameraRGB'].data,animated=True)])
+        if(self.dashcam_vid==True):
+            self.ims.append([plt.imshow(sensor_data['CameraRGB'].data,animated=True)])
         return sensor_data
 
     def saveVideo(self):
