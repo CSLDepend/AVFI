@@ -26,7 +26,7 @@ class CameraFaultModel(object):
 
 class PassThrough(CameraFaultModel):
     def get_name(self):
-        return 'PassThrough'
+        return 'Pass'
 
     def inject(self,InputImage):
         return InputImage
@@ -40,7 +40,7 @@ class Occlusion(CameraFaultModel):
 
     def inject(self,InputImage):
         r = np.random.rand()
-        if(self.inject_prob<r):
+        if(self.inject_prob>r):
             InputImage.flags.writeable = True
             ret_img=self.mod_fn(InputImage)
             self.inject_counter+=1
@@ -51,7 +51,7 @@ class Occlusion(CameraFaultModel):
 #Occulusion Classes
 class SolidOcclusion(Occlusion):
     def get_name(self):
-        return 'SolidOcclusion'
+        return 'SolidOcc'
 
     def random_params(self):
         self.occ = 0
@@ -67,7 +67,7 @@ class SolidOcclusion(Occlusion):
 
 class TransparentOcclusion(Occlusion):
     def get_name(self):
-        return 'TransparentOcclusion'
+        return 'TransOcc'
 
     def random_params(self):
         self.occ = np.random.uniform()
@@ -91,7 +91,7 @@ class Noise(CameraFaultModel):
 
     def inject(self,InputImage):
         r = np.random.rand()
-        if(self.inject_prob<r):
+        if(self.inject_prob>r):
             InputImage.flags.writeable = True
             ret_img=self.mod_fn(InputImage)
             self.inject_counter+=1
@@ -101,7 +101,7 @@ class Noise(CameraFaultModel):
 
 class SaltAndPepper(Noise):
     def get_name(self):
-        return 'SaltAndPepper'
+        return 'SAndP'
 
     def random_params(self):
         self.s_vs_p = np.random.uniform()

@@ -100,7 +100,8 @@ class UIUC_FI_Benchmark(CoRL2017):
 
     def _get_details(self):
         # Function to get automatic information from the experiment for writing purposes
-        return 'uiuc_fi_2018_' + self._city_name + '_' + self.f_i.get_injector_name()
+        return 'uiuc_fi_2018_' + self._city_name + '_' + self.f_i.get_ip_injector_name() + '_' +\
+                self.f_i.get_op_injector_name()
 
     @staticmethod
     def _get_experiments_names(experiments):
