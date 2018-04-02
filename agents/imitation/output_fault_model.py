@@ -19,7 +19,7 @@ class OutputFaultModel(object):
     
 class ControlPassThrough(OutputFaultModel):
     def get_name(self):
-        return "ControlPass"
+        return "CtrlPass"
 
     def inject(self,controls):
         #Available Controls
