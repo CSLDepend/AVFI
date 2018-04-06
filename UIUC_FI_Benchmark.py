@@ -170,6 +170,9 @@ class UIUC_FI_Benchmark(CoRL2017):
                 #Added two new fields
                 self._dict_rewards['vehicles'] = experiment.Conditions.NumberOfVehicles
                 self._dict_rewards['pedestrians'] = experiment.Conditions.NumberOfPedestrians
+                self._dict_stats['IpInjectProb'] = self.f_i.input_fm.inject_prob
+                self._dict_stats['OpInjectProb'] = self.f_i.output_fm.inject_prob
+                self._dict_stats['FrameDelay'] = self.f_i.output_fm.frames_to_delay
                 #End of modification
 
                 rw.writerow(self._dict_rewards)
