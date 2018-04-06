@@ -93,15 +93,15 @@ if (__name__ == '__main__'):
     '''
     #Use one of the following fi_list. Comment the rest out
     #fi_list for workshop paper O/P Delay Inject Experiments with frames sweep
-    fi_list=[{"ip":PassThrough(1),"op":ControlPassThrough(1,0)},
-             {"ip":PassThrough(1),"op":ControlDelayInjector(0.1,5)},
+    fi_list=[{"ip":PassThrough(1),"op":ControlDelayInjector(0.1,5)},
              {"ip":PassThrough(1),"op":ControlDelayInjector(0.1,10)},
              {"ip":PassThrough(1),"op":ControlDelayInjector(0.1,20)},
              {"ip":PassThrough(1),"op":ControlDelayInjector(0.1,30)},
              {"ip":PassThrough(1),"op":ControlDropInjector(0.1,5)},
              {"ip":PassThrough(1),"op":ControlDropInjector(0.1,10)},
              {"ip":PassThrough(1),"op":ControlDropInjector(0.1,20)},
-             {"ip":PassThrough(1),"op":ControlDropInjector(0.1,30)}
+             {"ip":PassThrough(1),"op":ControlDropInjector(0.1,30)},
+             {"ip":PassThrough(1),"op":ControlPassThrough(1,0)}
     ]
     '''
     #fi_list for workshop paper O/P Delay Inject Experiments with Probability sweep
