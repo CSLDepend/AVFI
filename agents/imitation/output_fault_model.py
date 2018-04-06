@@ -1,9 +1,9 @@
 import numpy as np
 
 class OutputFaultModel(object):
-    def __init__(self,prob):
+    def __init__(self,prob,frame_delay):
         self.inject_prob = prob
-        self.frames_to_delay = 10
+        self.frames_to_delay = frame_delay
         self.controls_buffer=[]
         self.delay_counter=0
 
@@ -12,10 +12,11 @@ class OutputFaultModel(object):
 
     def inject(self,controls):
         pass
-
-    @staticmethod
-    def getFramesToDelay():
-        return int(np.random.normal(5,2))
+    
+    def getFramesToDelay(self):
+        #changed for workshop paper
+        return self.frames_to_delay
+        #return int(np.random.normal(5,2))
     
 class ControlPassThrough(OutputFaultModel):
     def get_name(self):
@@ -33,7 +34,7 @@ class ControlPassThrough(OutputFaultModel):
 
 class ControlRandomInjector(OutputFaultModel):
     def get_name(self):
-        return "CtrlRnd"
+        return "CtrlRnd_"+str(self.inject_prob)+"_"+str(self.frames_to_delay)
 
     def inject(self,controls):
         r = np.random.rand()
@@ -53,7 +54,7 @@ class ControlRandomInjector(OutputFaultModel):
 
 class ControlDelayInjector(OutputFaultModel):
     def get_name(self):
-        return "CtrlDly"
+        return "CtrlDly_"+str(self.inject_prob)+"_"+str(self.frames_to_delay)
     def inject(self,controls):
         if(self.delay_counter>0):
             self.delay_counter-=1
@@ -69,7 +70,7 @@ class ControlDelayInjector(OutputFaultModel):
         else:
             r = np.random.uniform(0,1)
             if(self.inject_prob>r):
-                self.frames_to_delay = OutputFaultModel.getFramesToDelay()
+                self.frames_to_delay = self.getFramesToDelay()
                 self.delay_counter=self.frames_to_delay
 
         return controls
@@ -77,7 +78,7 @@ class ControlDelayInjector(OutputFaultModel):
     
 class ControlDropInjector(OutputFaultModel):
     def get_name(self):
-        return "CtrlDrp"
+        return "CtrlDrp_"+str(self.inject_prob)+"_"+str(self.frames_to_delay)
 
     def inject(self,controls):
         if(self.delay_counter>0):
@@ -92,7 +93,7 @@ class ControlDropInjector(OutputFaultModel):
             r = np.random.uniform(0,1)
             if(self.inject_prob>r):
                 self.controls_buffer.append(controls)
-                self.frames_to_delay = OutputFaultModel.getFramesToDelay()
+                self.frames_to_delay = self.getFramesToDelay()
                 self.delay_counter=self.frames_to_delay
 
         return controls

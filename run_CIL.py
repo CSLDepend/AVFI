@@ -51,7 +51,7 @@ if (__name__ == '__main__'):
     argparser.add_argument(
         '-n', '--log_name',
         metavar='T',
-        default='test',
+        default='uiuc_fi_2018',
         help='The name of the log file to be created by the scripts'
     )
 
@@ -79,22 +79,50 @@ if (__name__ == '__main__'):
     agent = ImitationLearning(args.city_name,args.avoid_stopping)
     #Test Parameters
     #WaterDrop(300,400,100,100,2.0,2.0),TransparentOcclusion(200,300,200,200),
-    fi_list=[{"ip":PassThrough(1),"op":ControlPassThrough(1)},
-             {"ip":SolidOcclusion(0.7),"op":ControlPassThrough(1)},
-             {"ip":TransparentOcclusion(0.7),"op":ControlPassThrough(1)},
-             {"ip":WaterDrop(300,400,100,100,2.0,2.0),"op":ControlPassThrough(1)},
-             {"ip":SaltAndPepper(0.7),"op":ControlPassThrough(1)},
-             {"ip":Gaussian(0.7),"op":ControlPassThrough(1)},
-             {"ip":PassThrough(1),"op":ControlDelayInjector(0.1)},
-             {"ip":PassThrough(1),"op":ControlDropInjector(0.1)},
-             {"ip":PassThrough(1),"op":ControlRandomInjector(0.2)},
+    '''
+    fi_list=[{"ip":PassThrough(1),"op":ControlPassThrough(1,0)},
+             {"ip":SolidOcclusion(0.7),"op":ControlPassThrough(1,0)},
+             {"ip":TransparentOcclusion(0.7),"op":ControlPassThrough(1,0)},
+             {"ip":WaterDrop(300,400,100,100,2.0,2.0),"op":ControlPassThrough(1,0)},
+             {"ip":SaltAndPepper(0.7),"op":ControlPassThrough(1,0)},
+             {"ip":Gaussian(0.7),"op":ControlPassThrough(1,0)},
+             {"ip":PassThrough(1),"op":ControlDelayInjector(0.1,10)},
+             {"ip":PassThrough(1),"op":ControlDropInjector(0.1,10)},
+             {"ip":PassThrough(1),"op":ControlRandomInjector(0.2,10)},
     ]
+    '''
+    #Use one of the following fi_list. Comment the rest out
+    #fi_list for workshop paper O/P Delay Inject Experiments with frames sweep
+    fi_list=[{"ip":PassThrough(1),"op":ControlPassThrough(1,0)},
+             {"ip":PassThrough(1),"op":ControlDelayInjector(0.1,5)},
+             {"ip":PassThrough(1),"op":ControlDelayInjector(0.1,10)},
+             {"ip":PassThrough(1),"op":ControlDelayInjector(0.1,20)},
+             {"ip":PassThrough(1),"op":ControlDelayInjector(0.1,30)},
+             {"ip":PassThrough(1),"op":ControlDropInjector(0.1,5)},
+             {"ip":PassThrough(1),"op":ControlDropInjector(0.1,10)},
+             {"ip":PassThrough(1),"op":ControlDropInjector(0.1,20)},
+             {"ip":PassThrough(1),"op":ControlDropInjector(0.1,30)}
+    ]
+    '''
+    #fi_list for workshop paper O/P Delay Inject Experiments with Probability sweep
+    fi_list=[{"ip":PassThrough(1),"op":ControlDelayInjector(0.2,10)},
+             {"ip":PassThrough(1),"op":ControlDelayInjector(0.4,10)},
+             {"ip":PassThrough(1),"op":ControlDelayInjector(0.6,10)},
+             {"ip":PassThrough(1),"op":ControlDelayInjector(0.8,10)},
+             {"ip":PassThrough(1),"op":ControlDelayInjector(1,10)},
+             {"ip":PassThrough(1),"op":ControlDropInjector(0.2,10)},
+             {"ip":PassThrough(1),"op":ControlDropInjector(0.4,10)},
+             {"ip":PassThrough(1),"op":ControlDropInjector(0.6,10)},
+             {"ip":PassThrough(1),"op":ControlDropInjector(0.8,10)},
+             {"ip":PassThrough(1),"op":ControlDropInjector(1,10)}
+    ]
+    '''
     path_types=[True,True,True]
-    path_cases=[10,10,10]
+    path_cases=[5,5,5]
     weather_list=[1, 3, 6, 8]
     #Vehicle and ppl_density lists should be of the same length
-    vehicle_density=[20]
-    ppl_density=[50]
+    vehicle_density=[100]
+    ppl_density=[150]
     for fm in fi_list:
         print("TOP_LEVEL_DEBUG:",args.city_name,fm["ip"].get_name(),fm["op"].get_name())
         f_i=FaultInjector(fm["ip"],fm["op"],args.city_name,args.dump_dashcam)
