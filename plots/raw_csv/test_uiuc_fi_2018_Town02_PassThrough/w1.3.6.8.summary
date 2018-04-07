@@ -1,0 +1,513 @@
+Metric : average_completion
+  Weather: 1.0
+    Task 0 -> 0.901027515391
+    Task 1 -> 0.941820152857
+    Task 2 -> 0.521386513855
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.19701951517527316
+  Weather: 3.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.807555171684
+    Task 4 -> 0.787685724125
+    Task 5 -> -0.0660927551592
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.127429011720847
+  Weather: 6.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.947311136365
+    Task 7 -> 0.864710280412
+    Task 8 -> -0.317833067841
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.12451569574466546
+  Weather: 8.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.846760052303
+    Task 10 -> 0.821181691097
+    Task 11 -> 0.702513159247
+    AvG  -> 0.19753790855396822
+Metric : intersection_offroad
+  Weather: 1.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+  Weather: 3.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+  Weather: 6.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+  Weather: 8.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+Metric : intersection_otherlane
+  Weather: 1.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+  Weather: 3.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+  Weather: 6.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+  Weather: 8.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+Metric : collision_pedestrians
+  Weather: 1.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+  Weather: 3.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+  Weather: 6.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+  Weather: 8.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+Metric : collision_vehicles
+  Weather: 1.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+  Weather: 3.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+  Weather: 6.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+  Weather: 8.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+Metric : collision_other
+  Weather: 1.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+  Weather: 3.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+  Weather: 6.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+  Weather: 8.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.0
+Metric : average_fully_completed
+  Weather: 1.0
+    Task 0 -> 0.9
+    Task 1 -> 0.8
+    Task 2 -> 0.6
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.19166666666666668
+  Weather: 3.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.8
+    Task 4 -> 0.7
+    Task 5 -> 0.2
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.14166666666666666
+  Weather: 6.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 1.0
+    Task 7 -> 0.8
+    Task 8 -> 0.3
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.17500000000000002
+  Weather: 8.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.9
+    Task 10 -> 0.8
+    Task 11 -> 0.7
+    AvG  -> 0.20000000000000004
+Metric : average_speed
+  Weather: 1.0
+    Task 0 -> 12.7358768893
+    Task 1 -> 11.6816639579
+    Task 2 -> 10.3521470701
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 2.897473993109569
+  Weather: 3.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 11.1648299259
+    Task 4 -> 10.1792470195
+    Task 5 -> 4.66962504206
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 2.1678084989527715
+  Weather: 6.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 14.2722469412
+    Task 7 -> 11.9876332395
+    Task 8 -> 5.59129678811
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 2.6542647473980017
+  Weather: 8.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 12.057860419
+    Task 10 -> 10.2717677874
+    Task 11 -> 11.6121958608
+    AvG  -> 2.82848533893605
+Metric : driven_kilometers
+  Weather: 1.0
+    Task 0 -> 0.5393629711660274
+    Task 1 -> 1.0153553046468817
+    Task 2 -> 3.363755354171736
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.40987280249872043
+  Weather: 3.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.5120631394532937
+    Task 4 -> 0.8634642421596195
+    Task 5 -> 1.871932825653513
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.2706216839388689
+  Weather: 6.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.5734787046619141
+    Task 7 -> 0.8840320091237269
+    Task 8 -> 2.146832450995674
+    Task 9 -> 0.0
+    Task 10 -> 0.0
+    Task 11 -> 0.0
+    AvG  -> 0.3003619303984429
+  Weather: 8.0
+    Task 0 -> 0.0
+    Task 1 -> 0.0
+    Task 2 -> 0.0
+    Task 3 -> 0.0
+    Task 4 -> 0.0
+    Task 5 -> 0.0
+    Task 6 -> 0.0
+    Task 7 -> 0.0
+    Task 8 -> 0.0
+    Task 9 -> 0.5001017705234725
+    Task 10 -> 0.7863043947786056
+    Task 11 -> 3.5677284757816268
+    AvG  -> 0.40451122009030877
