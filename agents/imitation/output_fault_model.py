@@ -34,7 +34,7 @@ class ControlPassThrough(OutputFaultModel):
 
 class ControlRandomInjector(OutputFaultModel):
     def get_name(self):
-        return "CtrlRnd"
+        return "CtrlRnd_"+str(self.inject_prob)
 
     def inject(self,controls):
         r = np.random.rand()
@@ -54,7 +54,7 @@ class ControlRandomInjector(OutputFaultModel):
 
 class ControlDelayInjector(OutputFaultModel):
     def get_name(self):
-        return "CtrlDly"
+        return "CtrlDly_"+str(self.inject_prob)+'_'+str(self.frames_to_delay)
     def inject(self,controls):
         if(self.delay_counter>0):
             self.delay_counter-=1
@@ -78,7 +78,7 @@ class ControlDelayInjector(OutputFaultModel):
     
 class ControlDropInjector(OutputFaultModel):
     def get_name(self):
-        return "CtrlDrp"
+        return "CtrlDrp_"+str(self.inject_prob)+'_'+str(self.frames_to_delay)
 
     def inject(self,controls):
         if(self.delay_counter>0):
