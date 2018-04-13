@@ -10,5 +10,6 @@ for ((COUNT=1;COUNT<=$1;COUNT++))
 	if [ ! -d "./run_results/run$COUNT" ]; then
 		mkdir ./run_results/run$COUNT
 	fi
-	cp -r ./_benchmarks_results/test_uiuc_fi_2018_$3* ./run_results/run$COUNT/
+	cp -r ./_benchmarks_results/uiuc_fi_2018_$3* ./run_results/run$COUNT/
+	nvidia-docker run -v `pwd`:/av_il_fi -ti zubin.maas/av_il_fi:ppc64le rm -rf ./_benchmarks_results/uiuc_fi_2018_$3*
     done
