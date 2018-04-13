@@ -5,7 +5,7 @@ import sys
 #Fault Injector Class
 from agents.imitation.fault_injector import FaultInjector
 #Camera Fault Model Class
-from agents.imitation.camera_fault_model import *
+from agents.imitation.input_fault_model import *
 #Controls Fault Model Class
 from agents.imitation.output_fault_model import *
 #Custom Benchmark Class
@@ -79,46 +79,23 @@ if (__name__ == '__main__'):
     agent = ImitationLearning(args.city_name,args.avoid_stopping)
     #Test Parameters
     #WaterDrop(300,400,100,100,2.0,2.0),TransparentOcclusion(200,300,200,200),
-    '''
+    
     fi_list=[{"ip":PassThrough(1),"op":ControlPassThrough(1,0)},
-             {"ip":SolidOcclusion(0.7),"op":ControlPassThrough(1,0)},
-             {"ip":TransparentOcclusion(0.7),"op":ControlPassThrough(1,0)},
-             {"ip":WaterDrop(300,400,100,100,2.0,2.0),"op":ControlPassThrough(1,0)},
-             {"ip":SaltAndPepper(0.7),"op":ControlPassThrough(1,0)},
-             {"ip":Gaussian(0.7),"op":ControlPassThrough(1,0)},
-             {"ip":PassThrough(1),"op":ControlDelayInjector(0.1,10)},
-             {"ip":PassThrough(1),"op":ControlDropInjector(0.1,10)},
-             {"ip":PassThrough(1),"op":ControlRandomInjector(0.2,10)},
+             {"ip":SolidOcclusion(0.8),"op":ControlPassThrough(1,0)},
+             {"ip":TransparentOcclusion(0.8),"op":ControlPassThrough(1,0)},
+             {"ip":WaterDrop(1,3,2.0,2.0),"op":ControlPassThrough(1,0)},
+             {"ip":SaltAndPepper(0.8),"op":ControlPassThrough(1,0)},
+             {"ip":Gaussian(0.8),"op":ControlPassThrough(1,0)},
+             {"ip":Speckle(0.8),"op":ControlPassThrough(1,0)},
+             {"ip":PassThrough(1),"op":ControlDelayInjector(0.1,15)},
+             {"ip":PassThrough(1),"op":ControlDropInjector(0.1,15)},
+             {"ip":PassThrough(1),"op":ControlRandomInjector(0.2,15)},
+             {"ip":MeasureFaultModel(0.8,0,40),"op":ControlPassThrough(1,0)},
+             {"ip":CommandFaultModel(0.8),"op":ControlPassThrough(1,0)},
     ]
-    '''
-    #Use one of the following fi_list. Comment the rest out
-    #fi_list for workshop paper O/P Delay Inject Experiments with frames sweep
-    fi_list=[{"ip":PassThrough(1),"op":ControlDelayInjector(0.1,5)},
-             {"ip":PassThrough(1),"op":ControlDelayInjector(0.1,10)},
-             {"ip":PassThrough(1),"op":ControlDelayInjector(0.1,20)},
-             {"ip":PassThrough(1),"op":ControlDelayInjector(0.1,30)},
-             {"ip":PassThrough(1),"op":ControlDropInjector(0.1,5)},
-             {"ip":PassThrough(1),"op":ControlDropInjector(0.1,10)},
-             {"ip":PassThrough(1),"op":ControlDropInjector(0.1,20)},
-             {"ip":PassThrough(1),"op":ControlDropInjector(0.1,30)},
-             {"ip":PassThrough(1),"op":ControlPassThrough(1,0)}
-    ]
-    '''
-    #fi_list for workshop paper O/P Delay Inject Experiments with Probability sweep
-    fi_list=[{"ip":PassThrough(1),"op":ControlDelayInjector(0.2,10)},
-             {"ip":PassThrough(1),"op":ControlDelayInjector(0.4,10)},
-             {"ip":PassThrough(1),"op":ControlDelayInjector(0.6,10)},
-             {"ip":PassThrough(1),"op":ControlDelayInjector(0.8,10)},
-             {"ip":PassThrough(1),"op":ControlDelayInjector(1,10)},
-             {"ip":PassThrough(1),"op":ControlDropInjector(0.2,10)},
-             {"ip":PassThrough(1),"op":ControlDropInjector(0.4,10)},
-             {"ip":PassThrough(1),"op":ControlDropInjector(0.6,10)},
-             {"ip":PassThrough(1),"op":ControlDropInjector(0.8,10)},
-             {"ip":PassThrough(1),"op":ControlDropInjector(1,10)}
-    ]
-    '''
-    path_types=[True,True,True]
-    path_cases=[5,5,5]
+
+    path_types=[False,True,True]
+    path_cases=[1,10,10]
     weather_list=[1, 3, 6, 8]
     #Vehicle and ppl_density lists should be of the same length
     vehicle_density=[100]

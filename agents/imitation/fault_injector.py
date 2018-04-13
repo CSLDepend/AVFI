@@ -6,6 +6,7 @@ import numpy as np
 import copy
 import os
 import sys
+from agents.imitation.input_fault_model import *
 #Update this path to point to ffmpeg.exe
 if sys.platform.startswith('win'):
     plt.rcParams['animation.ffmpeg_path'] = "E:\\ffmpeg\\bin\\ffmpeg.exe"
@@ -32,10 +33,25 @@ class FaultInjector(object):
         return mod_control_data
 
     def corruptSensors(self,sensor_data):
-        sensor_data['CameraRGB']._converted_data=self.input_fm.inject(sensor_data['CameraRGB'].data)
-        if(self.dashcam_vid==True):
-            self.ims.append([plt.imshow(sensor_data['CameraRGB'].data,animated=True)])
-        return sensor_data
+        if(isinstance(self.input_fm,CameraFaultModel)):
+            sensor_data['CameraRGB']._converted_data=self.input_fm.inject(sensor_data['CameraRGB'].data)
+            if(self.dashcam_vid==True):
+                self.ims.append([plt.imshow(sensor_data['CameraRGB'].data,animated=True)])
+            return sensor_data
+        else:
+            return sensor_data
+
+    def corruptSpeed(self,speed_in):
+        if(isinstance(self.input_fm,MeasureFaultModel)):
+            return self.input_fm.inject(speed_in)
+        else:
+            return speed_in
+
+    def corruptDir(self,direction):
+        if(isinstance(self.input_fm,CommandFaultModel)):
+            return self.input_fm.inject(direction)
+        else:
+            return direction
 
     def saveVideo(self):
         dirname='videos'

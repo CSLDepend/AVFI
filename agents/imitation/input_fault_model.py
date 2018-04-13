@@ -19,10 +19,10 @@ class CameraFaultModel(object):
     def inject(self,InputImage):
         pass
     def random_bound_box(self):
-        self.x = np.random.randint(0,max_camera_h-99)
-        self.y = np.random.randint(0,max_camera_w-99)
-        self.h = np.random.randint(50,min(max_camera_h-self.x,300))
-        self.w = np.random.randint(50,min(max_camera_w-self.y,300))
+        self.x = np.random.randint(0,max_camera_h-101)
+        self.y = np.random.randint(0,max_camera_w-101)
+        self.h = np.random.randint(100,min(max_camera_h-self.x,400))
+        self.w = np.random.randint(100,min(max_camera_w-self.y,400))
 
 class PassThrough(CameraFaultModel):
     def get_name(self):
@@ -40,8 +40,10 @@ class Occlusion(CameraFaultModel):
 
     def inject(self,InputImage):
         r = np.random.rand()
+        print(self.inject_prob,r)
         if(self.inject_prob>r):
             InputImage.flags.writeable = True
+            print("Calling mod_fn")
             ret_img=self.mod_fn(InputImage)
             self.inject_counter+=1
         else:
@@ -70,7 +72,7 @@ class TransparentOcclusion(Occlusion):
         return 'TransOcc'
 
     def random_params(self):
-        self.occ = np.random.uniform()
+        self.occ = np.random.uniform(0.5,0.9)
 
     def mod_fn(self,InputImage):
         if(self.inject_counter%randomize_freq==0):
@@ -105,7 +107,7 @@ class SaltAndPepper(Noise):
 
     def random_params(self):
         self.s_vs_p = np.random.uniform()
-        self.amount = np.random.uniform(0,0.004)
+        self.amount = np.random.uniform(0.04,0.4)
 
     def mod_fn(self,InputImage):
         if(self.inject_counter%randomize_freq==0):
@@ -173,67 +175,102 @@ class Speckle(Noise):
 
 class WaterDrop(Occlusion):
     #xR/yR = f_c/f_d 
-    def __init__(self, x_c_in, y_c_in, h_in, w_in,xR_in,yR_in):
-        self.x_c=x_c_in
-        self.y_c=y_c_in
-        self.h=h_in
-        self.w=w_in
+    def __init__(self,prob,drop_count,xR_in,yR_in):
+        self.drop_count = drop_count
+        self.drop_list=[]
+        for i in range(drop_count):
+            self.drop_list.append(self.create_new_droplet())
         self.xR=xR_in
         self.yR=yR_in
         self.inject_prob=0
         self.inject_counter=0
+        super().__init__(prob)
 
     def create_new_droplet(self):
-        self.x_c = np.random.randint(102,max_camera_h-52)
-        self.y_c = np.random.randint(102,max_camera_w-52)
-        self.h = np.random.randint(50,min(max_camera_h-self.x_c,self.x_c/2,300))
-        self.w = np.random.randint(50,min(max_camera_w-self.y_c,self.y_c/2,300))
+        x_c = np.random.randint(102,max_camera_h-52)
+        y_c = np.random.randint(102,max_camera_w-52)
+        h = np.random.randint(50,min(max_camera_h-x_c,x_c/2,300))
+        w = np.random.randint(50,min(max_camera_w-y_c,y_c/2,300))
+        return {"x_c":x_c,"y_c":y_c,"h":h,"w":w}
 
-    def move_droplet_down(self):
-        self.x_c+=5
-        if (self.x_c+self.h/2+1 > max_camera_h):
-            self.create_new_droplet()
+    def move_droplets_down(self):
+        for idx,drop in enumerate(self.drop_list):
+            drop["x_c"]+=5
+            if (drop["x_c"]+drop["h"]/2+1 > max_camera_h):
+                self.drop_list[idx]=self.create_new_droplet()
 
     def get_name(self):
         return 'WaterDrop'
 
     def mod_fn(self,InputImage):
         #if(self.inject_counter%randomize_freq==0):
-        self.move_droplet_down()
+        self.move_droplets_down()
         #self.inject_counter=0
-
-        x_range = range(int(self.x_c - self.h/2),int(np.ceil(self.x_c + self.h/2)+1)) #Rows
-        y_range = range(int(self.y_c - self.w/2),int(np.ceil(self.y_c + self.w/2)+1)) #Cols
-
         out = np.copy(InputImage)
+        for drop in self.drop_list:
+            x_range = range(int(drop["x_c"] - drop["h"]/2),int(np.ceil(drop["x_c"] + drop["h"]/2)+1)) #Rows
+            y_range = range(int(drop["y_c"] - drop["w"]/2),int(np.ceil(drop["y_c"] + drop["w"]/2)+1)) #Cols
 
-        for i in x_range:
-            a_x = (self.x_c-i)**2/(self.h/2)**2
-            b_x = 1 - a_x
-            f_l_x = b_x*self.xR + a_x
-            i_dis = -((i-self.x_c)*f_l_x + self.x_c)
-            for j in y_range:
-                a_y = (self.y_c-j)**2/(self.w/2)**2
-                b_y = 1 - a_y
-                f_l_y = b_y*self.yR + a_y
-                j_dis = -((j-self.y_c)*f_l_y + self.y_c)
-                if((i-self.x_c)**2 + (j-self.y_c)**2 <= (self.h/2)**2):
-                    if(abs(j_dis)+2>max_camera_w or abs(i_dis)+2>max_camera_h):
-                        out[i][j][:] = 0
-                    else:
-                        '''
-                        y_pixel_weight = j_dis - int(j_dis)
-                        x_pixel_weight = i_dis - int(i_dis)
+            for i in x_range:
+                a_x = (drop["x_c"]-i)**2/(drop["h"]/2)**2
+                b_x = 1 - a_x
+                f_l_x = b_x*self.xR + a_x
+                i_dis = -((i-drop["x_c"])*f_l_x + drop["x_c"])
+                for j in y_range:
+                    a_y = (drop["y_c"]-j)**2/(drop["w"]/2)**2
+                    b_y = 1 - a_y
+                    f_l_y = b_y*self.yR + a_y
+                    j_dis = -((j-drop["y_c"])*f_l_y + drop["y_c"])
+                    if((i-drop["x_c"])**2 + (j-drop["y_c"])**2 <= (drop["h"]/2)**2):
+                        if(abs(j_dis)+2>max_camera_w or abs(i_dis)+2>max_camera_h):
+                            out[i][j][:] = 0
+                        else:
+                            '''
+                            y_pixel_weight = j_dis - int(j_dis)
+                            x_pixel_weight = i_dis - int(i_dis)
 
-                        h_pixel_val1 = (1-y_pixel_weight)*InputImage[int(i_dis)][int(j_dis)][:] + (y_pixel_weight)*InputImage[int(i_dis)][int(j_dis)+1][:]
-                        h_pixel_val2 = (1-y_pixel_weight)*InputImage[int(i_dis)+1][int(j_dis)][:] + (y_pixel_weight)*InputImage[int(i_dis)+1][int(j_dis)+1][:]
-                        out[i][j][:]= (1-x_pixel_weight)*h_pixel_val1 + x_pixel_weight*h_pixel_val2
-                        '''
-                        out[i][j][:] = InputImage[int(i_dis)][int(j_dis)][:]
+                            h_pixel_val1 = (1-y_pixel_weight)*InputImage[int(i_dis)][int(j_dis)][:] + (y_pixel_weight)*InputImage[int(i_dis)][int(j_dis)+1][:]
+                            h_pixel_val2 = (1-y_pixel_weight)*InputImage[int(i_dis)+1][int(j_dis)][:] + (y_pixel_weight)*InputImage[int(i_dis)+1][int(j_dis)+1][:]
+                            out[i][j][:]= (1-x_pixel_weight)*h_pixel_val1 + x_pixel_weight*h_pixel_val2
+                            '''
+                            out[i][j][:] = out[int(i_dis)][int(j_dis)][:]
 
-        nrows,ncols,ch = out.shape
-        row,col =  np.ogrid[:nrows,:ncols]
-        cnt_row,cnt_col = self.x_c,self.y_c
-        droplet_mask = ((row-cnt_row)**2 + (col-cnt_col)**2 < (self.h/2)**2)
-        out[droplet_mask] = scipy.ndimage.gaussian_filter(out[droplet_mask],sigma=1)
+            nrows,ncols,ch = out.shape
+            row,col =  np.ogrid[:nrows,:ncols]
+            cnt_row,cnt_col = drop["x_c"],drop["y_c"]
+            droplet_mask = ((row-cnt_row)**2 + (col-cnt_col)**2 < (drop["h"]/2)**2)
+            out[droplet_mask] = scipy.ndimage.gaussian_filter(out[droplet_mask],sigma=1)
         return out.astype(np.uint8)
+
+
+class MeasureFaultModel(object):
+    def __init__(self,prob,min_speed,max_speed):
+        self.inject_prob = prob
+        self.min_speed = min_speed
+        self.max_speed = max_speed
+
+    def get_name(self):
+        return "SpeedM_"+str(self.inject_prob)
+
+    def inject(self,speed_in):
+        r = np.random.rand()
+        if(self.inject_prob>r):
+            return np.random.randint(self.min_speed,self.max_speed)
+        else:
+            return speed_in
+
+class CommandFaultModel(object):
+    def __init__(self,prob):
+        self.inject_prob = prob
+        self.command_set = [0.0,2.0,3.0,4.0,5.0]
+
+    def get_name(self):
+        return "DirC_"+str(self.inject_prob)
+
+    def inject(self,dir_in):
+        r = np.random.rand()
+        if(self.inject_prob>r):
+            index = np.random.randint(0,len(self.command_set))
+            return self.command_set[index]
+        else:
+            return dir_in

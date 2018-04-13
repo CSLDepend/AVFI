@@ -101,7 +101,11 @@ class ImitationLearning(Agent):
              measurements.player_measurements.transform.orientation.z),
             (target.location.x, target.location.y, 22),
             (target.orientation.x, target.orientation.y, -0.001))
-
+        #Fault Inject on direction Command C
+        direction = self.f_i.corruptDir(direction)
+        #Fault Inject on forward_speed measurement m
+        measurements.player_measurements.forward_speed = \
+            self.f_i.corruptSpeed(measurements.player_measurements.forward_speed)
         control = self._compute_action(sensor_data['CameraRGB'].data,
                                        measurements.player_measurements.forward_speed, direction)
 
