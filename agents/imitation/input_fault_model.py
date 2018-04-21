@@ -43,7 +43,6 @@ class Occlusion(CameraFaultModel):
         print(self.inject_prob,r)
         if(self.inject_prob>r):
             InputImage.flags.writeable = True
-            print("Calling mod_fn")
             ret_img=self.mod_fn(InputImage)
             self.inject_counter+=1
         else:
@@ -189,8 +188,8 @@ class WaterDrop(Occlusion):
     def create_new_droplet(self):
         x_c = np.random.randint(102,max_camera_h-52)
         y_c = np.random.randint(102,max_camera_w-52)
-        h = np.random.randint(50,min(max_camera_h-x_c,x_c/2,300))
-        w = np.random.randint(50,min(max_camera_w-y_c,y_c/2,300))
+        h = np.random.randint(50,min(max_camera_h-x_c,x_c/2,200))
+        w = np.random.randint(50,min(max_camera_w-y_c,y_c/2,200))
         return {"x_c":x_c,"y_c":y_c,"h":h,"w":w}
 
     def move_droplets_down(self):

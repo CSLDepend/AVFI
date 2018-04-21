@@ -2,13 +2,15 @@ from carla.benchmarks.corl_2017 import *
 import csv
 
 class UIUC_FI_Benchmark(CoRL2017):
-    def __init__(self,city_name,name_to_save,f_i_in,path_types_in,path_cases_in,weather_list,veh_tasks,ppl_tasks):
+    def __init__(self,city_name,name_to_save,f_i_in,path_types_in,path_cases_in,weather_list,veh_tasks,ppl_tasks,
+        quality_level):
         self.f_i=f_i_in
         self.path_types=path_types_in # boolean list of the form [straight,curved,nav]
         self.path_cases=path_cases_in
         self.weather_list = weather_list
         self.vehicle_tasks=veh_tasks
         self.ppl_tasks=ppl_tasks
+        self.quality_level=quality_level
         super().__init__(city_name,name_to_save)
 
     def _poses_town01(self):
@@ -45,11 +47,11 @@ class UIUC_FI_Benchmark(CoRL2017):
         # This single RGB camera is used on every experiment
 
         camera = Camera('CameraRGB')
-        camera.set(CameraFOV=100)
+        camera.set(FOV=100)
 
         camera.set_image_size(800, 600)
 
-        camera.set_position(200, 0, 140)
+        camera.set_position(2.0, 0.0, 1.4)
         camera.set_rotation(-15.0, 0, 0)
 
         #weathers = [1, 3, 6, 8, 4, 14]
@@ -80,7 +82,8 @@ class UIUC_FI_Benchmark(CoRL2017):
                         NumberOfPedestrians=pedestrians,
                         WeatherId=weather,
                         SeedVehicles=123456789,
-                        SeedPedestrians=123456789
+                        SeedPedestrians=123456789,
+                        QualityLevel=self.quality_level
                     )
                     # Add all the cameras that were set for this experiments
 

@@ -12,7 +12,6 @@ from agents.imitation.output_fault_model import *
 from UIUC_FI_Benchmark import *
 
 from carla.benchmarks.corl_2017 import CoRL2017
-
 from carla.tcp import TCPConnectionError
 from carla.client import make_carla_client
 from agents.imitation.imitation_learning import ImitationLearning
@@ -21,10 +20,10 @@ import time
 try:
     from carla import carla_server_pb2 as carla_protocol
 except ImportError:
-    raise RuntimeError('cannot import "carla_server_pb2.py", run the protobuf compiler to generate this file')
+    raise RuntimeError(
+        'cannot import "carla_server_pb2.py", run the protobuf compiler to generate this file')
 
 if (__name__ == '__main__'):
-
     argparser = argparse.ArgumentParser(description=__doc__)
     argparser.add_argument(
         '-v', '--verbose',
@@ -61,6 +60,19 @@ if (__name__ == '__main__'):
         default=False,
         help=' Uses the speed prediction branch to avoid unwanted agent stops'
     )
+    argparser.add_argument(
+        '--continue-experiment',
+        action='store_true',
+        help='If you want to continue the experiment with the given log name'
+    )
+
+    argparser.add_argument(
+        '-q', '--quality-level',
+        choices=['Low', 'Epic'],
+        type=lambda s: s.title(),
+        default='Epic',
+        help='graphics quality level, a lower level makes the simulation run considerably faster.'
+    )
 
     argparser.add_argument(
          '--dump-dashcam',
@@ -95,7 +107,7 @@ if (__name__ == '__main__'):
     ]
 
     path_types=[False,True,True]
-    path_cases=[1,10,10]
+    path_cases=[10,10,10]
     weather_list=[1, 3, 6, 8]
     #Vehicle and ppl_density lists should be of the same length
     vehicle_density=[100]
@@ -108,7 +120,7 @@ if (__name__ == '__main__'):
             try:
                 with make_carla_client(args.host, args.port) as client:
                     uiuc_fi = UIUC_FI_Benchmark(args.city_name, args.log_name,f_i,path_types,
-                            path_cases,weather_list,vehicle_density,ppl_density)
+                            path_cases,weather_list,vehicle_density,ppl_density,args.quality_level)
                     results = uiuc_fi.benchmark_agent(agent, client)
                     uiuc_fi._plot_summary(weather_list)
                     break
@@ -118,6 +130,10 @@ if (__name__ == '__main__'):
             except Exception as exception:
                 logging.exception(exception)
                 sys.exit(1)
+            except KeyboardInterrupt:
+                if(args.dump_dashcam==True):
+                    f_i.saveVideo()
+                raise
         if(args.dump_dashcam==True):
             f_i.saveVideo()
         del(f_i)
