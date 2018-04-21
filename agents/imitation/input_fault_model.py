@@ -13,6 +13,7 @@ class CameraFaultModel(object):
         self.h = 100
         self.inject_prob = prob
         self.inject_counter=0
+        self.injectNow=0
 
     def get_name(self):
         pass
@@ -40,8 +41,9 @@ class Occlusion(CameraFaultModel):
 
     def inject(self,InputImage):
         r = np.random.rand()
-        print(self.inject_prob,r)
+        self.injectNow=0
         if(self.inject_prob>r):
+            self.injectNow=1
             InputImage.flags.writeable = True
             ret_img=self.mod_fn(InputImage)
             self.inject_counter+=1
@@ -92,7 +94,9 @@ class Noise(CameraFaultModel):
 
     def inject(self,InputImage):
         r = np.random.rand()
+        self.injectNow=0
         if(self.inject_prob>r):
+            self.injectNow=1
             InputImage.flags.writeable = True
             ret_img=self.mod_fn(InputImage)
             self.inject_counter+=1
@@ -247,13 +251,16 @@ class MeasureFaultModel(object):
         self.inject_prob = prob
         self.min_speed = min_speed
         self.max_speed = max_speed
+        self.injectNow=0
 
     def get_name(self):
         return "SpeedM_"+str(self.inject_prob)
 
     def inject(self,speed_in):
         r = np.random.rand()
+        self.injectNow=0
         if(self.inject_prob>r):
+            self.injectNow=1
             return np.random.randint(self.min_speed,self.max_speed)
         else:
             return speed_in
@@ -262,13 +269,16 @@ class CommandFaultModel(object):
     def __init__(self,prob):
         self.inject_prob = prob
         self.command_set = [0.0,2.0,3.0,4.0,5.0]
+        self.injectNow=0
 
     def get_name(self):
         return "DirC_"+str(self.inject_prob)
 
     def inject(self,dir_in):
         r = np.random.rand()
+        self.injectNow=0
         if(self.inject_prob>r):
+            self.injectNow=1
             index = np.random.randint(0,len(self.command_set))
             return self.command_set[index]
         else:

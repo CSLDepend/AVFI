@@ -107,7 +107,7 @@ if (__name__ == '__main__'):
     ]
 
     path_types=[False,True,True]
-    path_cases=[10,10,10]
+    path_cases=[1,10,10]
     weather_list=[1, 3, 6, 8]
     #Vehicle and ppl_density lists should be of the same length
     vehicle_density=[100]

@@ -1,5 +1,13 @@
 from carla.benchmarks.corl_2017 import *
 import csv
+import math
+import logging
+
+from carla.client import VehicleControl
+
+def sldist(c1, c2):
+    return math.sqrt((c2[0] - c1[0])**2 + (c2[1] - c1[1])**2)
+
 
 class UIUC_FI_Benchmark(CoRL2017):
     def __init__(self,city_name,name_to_save,f_i_in,path_types_in,path_cases_in,weather_list,veh_tasks,ppl_tasks,
@@ -117,6 +125,72 @@ class UIUC_FI_Benchmark(CoRL2017):
 
         return name_cat
 
+    #Overriding in benchmark.py to get TTV data
+    def run_navigation_episode(
+            self,
+            agent,
+            carla,
+            time_out,
+            target,
+            episode_name):
+
+        measurements, sensor_data = carla.read_data()
+        carla.send_control(VehicleControl())
+
+        t0 = measurements.game_timestamp
+        t1 = t0
+        success = False
+        measurement_vec = []
+        frame = 0
+        distance = 10000
+
+        while(t1 - t0) < (time_out * 1000) and not success:
+            measurements, sensor_data = carla.read_data()
+
+            control = agent.run_step(measurements, sensor_data, target)
+
+            logging.info("Controller is Inputting:")
+            logging.info('Steer = %f Throttle = %f Brake = %f ',
+                         control.steer, control.throttle, control.brake)
+
+            carla.send_control(control)
+
+            # measure distance to target
+            if self._save_images:
+                for name, image in sensor_data.items():
+                    image.save_to_disk(self._image_filename_format.format(
+                        episode_name, name, frame))
+
+            curr_x = 1e2 * measurements.player_measurements.transform.location.x
+            curr_y = 1e2 * measurements.player_measurements.transform.location.y
+
+            #Adding whether fault was injected at this frame
+            if(agent.f_i.input_fm.injectNow==1 or agent.f_i.output_fm.injectNow==1):
+                measurement_vec.append((measurements.player_measurements,1))
+            else:
+                measurement_vec.append((measurements.player_measurements,0))
+
+            t1 = measurements.game_timestamp
+
+            distance = sldist([curr_x, curr_y],
+                              [target.location.x*1e2, target.location.y*1e2])
+
+            logging.info('Status:')
+            logging.info(
+                '[d=%f] c_x = %f, c_y = %f ---> t_x = %f, t_y = %f',
+                float(distance), curr_x, curr_y, target.location.x*1e2,
+                 target.location.y*1e2)
+
+            if distance < 200.0:
+                success = True
+
+            frame += 1
+
+        if success:
+            return 1, measurement_vec, float(t1 - t0) / 1000.0, distance
+        return 0, measurement_vec, time_out, distance
+
+    #Overriding in benchmark.py
     def _write_summary_results(self, experiment, pose, rep,
                                path_distance, remaining_distance,
                                final_time, time_out, result):
@@ -145,6 +219,7 @@ class UIUC_FI_Benchmark(CoRL2017):
 
             w.writerow(self._dict_stats)
 
+    #Overriding in benchmark.py
     def _write_details_results(self, experiment, rep, reward_vec):
 
         with open(os.path.join(self._full_name,
@@ -157,20 +232,22 @@ class UIUC_FI_Benchmark(CoRL2017):
                 self._dict_rewards['rep'] = rep
                 self._dict_rewards['weather'] = experiment.Conditions.WeatherId
                 self._dict_rewards['collision_gen'] = reward_vec[
-                    i].collision_other
+                    i][0].collision_other
                 self._dict_rewards['collision_ped'] = reward_vec[
-                    i].collision_pedestrians
+                    i][0].collision_pedestrians
                 self._dict_rewards['collision_car'] = reward_vec[
-                    i].collision_vehicles
+                    i][0].collision_vehicles
                 self._dict_rewards['lane_intersect'] = reward_vec[
-                    i].intersection_otherlane
+                    i][0].intersection_otherlane
                 self._dict_rewards['sidewalk_intersect'] = reward_vec[
-                    i].intersection_offroad
+                    i][0].intersection_offroad
                 self._dict_rewards['pos_x'] = reward_vec[
-                    i].transform.location.x
+                    i][0].transform.location.x
                 self._dict_rewards['pos_y'] = reward_vec[
-                    i].transform.location.y
-                #Added two new fields
+                    i][0].transform.location.y
+                #Added new fields
+                self._dict_rewards['Injected'] = reward_vec[
+                    i][1]
                 self._dict_rewards['vehicles'] = experiment.Conditions.NumberOfVehicles
                 self._dict_rewards['pedestrians'] = experiment.Conditions.NumberOfPedestrians
                 self._dict_rewards['IpInjectProb'] = self.f_i.input_fm.inject_prob

@@ -6,6 +6,7 @@ class OutputFaultModel(object):
         self.frames_to_delay = frame_delay
         self.controls_buffer=[]
         self.delay_counter=0
+        self.injectNow=0
 
     def get_name(self):
         pass
@@ -38,7 +39,9 @@ class ControlRandomInjector(OutputFaultModel):
 
     def inject(self,controls):
         r = np.random.rand()
+        self.injectNow=0
         if(self.inject_prob>r):
+            self.injectNow=1
             acc= np.random.randint(2)
             if(acc==1):
                 controls.throttle = np.random.rand()
@@ -68,8 +71,10 @@ class ControlDelayInjector(OutputFaultModel):
             print("Restoring:",len(self.controls_buffer))
 
         else:
+            self.injectNow=0
             r = np.random.uniform(0,1)
             if(self.inject_prob>r):
+                self.injectNow=1
                 self.frames_to_delay = self.getFramesToDelay()
                 self.delay_counter=self.frames_to_delay
 
@@ -90,8 +95,10 @@ class ControlDropInjector(OutputFaultModel):
             self.controls_buffer.pop(0)
 
         else:
+            self.injectNow=0
             r = np.random.uniform(0,1)
             if(self.inject_prob>r):
+                self.injectNow=1
                 self.controls_buffer.append(controls)
                 self.frames_to_delay = self.getFramesToDelay()
                 self.delay_counter=self.frames_to_delay
