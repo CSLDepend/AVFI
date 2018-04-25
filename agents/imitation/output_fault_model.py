@@ -59,6 +59,7 @@ class ControlDelayInjector(OutputFaultModel):
     def get_name(self):
         return "CtrlDly_"+str(self.inject_prob)+'_'+str(self.frames_to_delay)
     def inject(self,controls):
+        self.injectNow=0
         if(self.delay_counter>0):
             self.delay_counter-=1
             self.controls_buffer.append(controls)
@@ -71,7 +72,6 @@ class ControlDelayInjector(OutputFaultModel):
             print("Restoring:",len(self.controls_buffer))
 
         else:
-            self.injectNow=0
             r = np.random.uniform(0,1)
             if(self.inject_prob>r):
                 self.injectNow=1
@@ -86,6 +86,7 @@ class ControlDropInjector(OutputFaultModel):
         return "CtrlDrp_"+str(self.inject_prob)+'_'+str(self.frames_to_delay)
 
     def inject(self,controls):
+        self.injectNow=0
         if(self.delay_counter>0):
             self.delay_counter-=1
             controls = self.controls_buffer[0]
@@ -95,7 +96,6 @@ class ControlDropInjector(OutputFaultModel):
             self.controls_buffer.pop(0)
 
         else:
-            self.injectNow=0
             r = np.random.uniform(0,1)
             if(self.inject_prob>r):
                 self.injectNow=1
