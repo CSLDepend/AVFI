@@ -1,101 +1,43 @@
-Conditional Imitation Learning at CARLA
+AVFI: Fault Injection for Autonmous Vehicles using CARLA
 ===============
 
-Repository to store the conditional imitation learning based
-AI that runs on carla. The trained model is the one used 
-on "CARLA: An Open Urban Driving Simulator" paper.
+We have provided the Dockerfile which will build an image with all
+the required packages and dependencies installed. Using this image
+is the easiest way to run the CARLA client with the Fault Injection
+campaign.
 
-Requirements
--------
-tensorflow_gpu 1.1 or more
+The self driving agent with the fault injector will run from within
+the docker container. The server (world simulator with the AV) has 
+to be started separately before running the agent from the docker
+container. 
 
-numpy
+Make sure both the server and the client are using CARLA 0.8.1
+https://github.com/carla-simulator/carla/releases/tag/0.8.1
 
-scipy
+To start the fault injection campaign using the client, run 
+`python /av_il_fi/run_CIL.py --host [serverhostname] -p [serverport] -c [citymap]`
 
-carla 0.7.1
+The server and the client should have matching port and city parameters
+For more information on how to run the client and the server, check the
+README_CARLA_IL.md and the CARLA manual online.
 
-future
+UIUC FI Codebase
+---------
+1. **UIUC_FI_Benchmark.py** - This file sets up the experiments that the self-driving
+agent will execute alongside the fault injection campaign. It also logs the metrics 
+from the AV and Fault Injector
 
-PIL
+2. **/agents/imitation/fault_injector.py** - Given an input and output fault model,
+this file is reponsible for perturbing the input measurements from the AV sensors 
+and the output controls from the self driving agent. Takes as argument objects from
+classes defined in `input_fault_model` and `output_fault_model`.
 
+3. **/agents/imitation/input_fault_model.py** - Defines the CameraFaultModel,
+MeasureFaultModel and CommandFaultModel classes as input fault models. 
 
-Running
-------
-Basically run:
+4. **/agents/imitation/output_fault_model.py** - Defines Control fault models
+that perturb control information from the self driving agent to the AV.
 
-$ python run_CIL.py
-
-Note that you must have a carla server running . <br>
-To check the other options run
-
-$ python run_CIL.py --help
-
-
-Dataset
-------
-
-[The dataset can be downloaded here](https://drive.google.com/file/d/1hloAeyamYn-H6MfV1dRtY1gJPhkR55sY/view) 24 GB
-
-The data is stored on HDF5 files.
-Each HDF5 file contains 200 data points.
-The HDF5 contains two "datasets":
-'images_center': <br>
-The RGB images stored at 200x88 resolution
-
-'targets': <br>
-All the controls and measurements collected. 
-They are stored on the "dataset" vector.
-
-1. Steer, float 
-2. Gas, float
-3. Brake, float 
-4. Hand Brake, boolean 
-5. Reverse Gear, boolean
-6. Steer Noise, float 
-7. Gas Noise, float 
-8. Brake Noise, float
-9. Position X, float 
-10. Position Y, float 
-11. Speed, float 
-12. Collision Other, float 
-13. Collision Pedestrian, float 
-14. Collision Car, float 
-15. Opposite Lane Inter, float 
-16. Sidewalk Intersect, float 
-17. Acceleration X,float 
-18. Acceleration Y, float 
-19. Acceleration Z, float 
-20. Platform time, float 
-21. Game Time, float 
-22. Orientation X, float 
-23. Orientation Y, float 
-24. Orientation Z, float 
-25. High level command, int ( 2 Follow lane, 3 Left, 4 Right, 5 Straight) 
-26. Noise, Boolean ( If the noise, perturbation, is activated, (Not Used) ) 
-27. Camera (Which camera was used) 
-28. Angle (The yaw angle for this camera)
-
-
-
-
-Paper
------
-
-If you use the conditional imitation learning, please cite our ICRA 2018 paper.
-
-End-to-end Driving via Conditional Imitation Learning. <br> Codevilla,
-Felipe and Müller, Matthias and López, Antonio and Koltun, Vladlen and
-Dosovitskiy, Alexey. ICRA 2018
-[[PDF](http://vladlen.info/papers/conditional-imitation.pdf)]
-
-
-```
-@inproceedings{Codevilla2018,
-  title={End-to-end Driving via Conditional Imitation Learning},
-  author={Codevilla, Felipe and M{\"u}ller, Matthias and L{\'o}pez,
-Antonio and Koltun, Vladlen and Dosovitskiy, Alexey},
-  booktitle={International Conference on Robotics and Automation (ICRA)},
-  year={2018},
-}
-
+5. **/agents/imitation/imitation_learning.py** - Original IL agent code has been
+modified to incorporate fault inejction through the FaultInjector class defined
+in `fault_injector.py`.

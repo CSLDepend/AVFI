@@ -1,3 +1,8 @@
+# Copyright (c) 2019 DEPEND Research Group at
+# University of Illinois, Urbana Champaign (UIUC)
+# This work is licensed under the terms of the MIT license.
+# For a copy, see <https://opensource.org/licenses/MIT>.
+
 import numpy as np
 import scipy
 

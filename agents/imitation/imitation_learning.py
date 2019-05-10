@@ -1,3 +1,9 @@
+# Copyright (c) 2019 DEPEND Research Group at
+# University of Illinois, Urbana Champaign (UIUC)
+# Copyright (c) 2018 CARLA
+# This work is licensed under the terms of the MIT license.
+# For a copy, see <https://opensource.org/licenses/MIT>.
+
 from __future__ import print_function
 
 import os
