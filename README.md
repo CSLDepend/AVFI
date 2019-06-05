@@ -41,3 +41,41 @@ that perturb control information from the self driving agent to the AV.
 5. **/agents/imitation/imitation_learning.py** - Original IL agent code has been
 modified to incorporate fault inejction through the FaultInjector class defined
 in `fault_injector.py`.
+
+Papers
+-----
+
+If you use AVFI, please cite the following papers.
+
+1. Avfi: Fault injection for autonomous vehicles. <br>
+Jha, Saurabh, Subho S. Banerjee, James Cyriac,
+Zbigniew T. Kalbarczyk, and Ravishankar K. Iyer. DSN 2018
+[[PDF](http://ssbaner2.cs.illinois.edu/publications/dsn2018_avfi/Paper.pdf)]
+
+```
+@inproceedings{jha2018avfi,
+  title={Avfi: Fault injection for autonomous vehicles},
+  author={Jha, Saurabh and Banerjee, Subho S and Cyriac, James and Kalbarczyk, Zbigniew T and Iyer, Ravishankar K},
+  booktitle={2018 48th Annual IEEE/IFIP International Conference on Dependable Systems and Networks Workshops (DSN-W)},
+  pages={55--56},
+  year={2018},
+  organization={IEEE}
+}
+```
+
+
+2. End-to-end Driving via Conditional Imitation Learning. <br> Codevilla,
+Felipe and Müller, Matthias and López, Antonio and Koltun, Vladlen and
+Dosovitskiy, Alexey. ICRA 2018
+[[PDF](http://vladlen.info/papers/conditional-imitation.pdf)]
+
+
+```
+@inproceedings{Codevilla2018,
+  title={End-to-end Driving via Conditional Imitation Learning},
+  author={Codevilla, Felipe and M{\"u}ller, Matthias and L{\'o}pez,
+Antonio and Koltun, Vladlen and Dosovitskiy, Alexey},
+  booktitle={International Conference on Robotics and Automation (ICRA)},
+  year={2018},
+}
+```
