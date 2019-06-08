@@ -14,8 +14,17 @@ container.
 Make sure both the server and the client are using CARLA 0.8.1
 https://github.com/carla-simulator/carla/releases/tag/0.8.1
 
+First start the Carla World Server <br>
+Example for Town01<br>
+On Windows: `.\CarlaUE4.exe /Game/Maps/Town01 -carla-server -benchmark -fps=15 -windowed -ResX=800 -ResY=600 -carla-settings=.\Example.CarlaSettings.ini`
+
+The settings file can be found here: https://github.com/carla-simulator/carla/blob/9a9ce7bfa1cc22c77e7ba36713af1ff3bd768392/Docs/Example.CarlaSettings.ini <br>
+Ensure the the 'UseNetworking' property is set to 'true'. Take note of the 'WorldPort' number. This port number should be used when starting the agent.
+
 To start the fault injection campaign using the client, run 
-`python /av_il_fi/run_CIL.py --host [serverhostname] -p [serverport] -c [citymap]`
+`python ./run_CIL.py --host [serverhostname] -p [serverport] -c [citymap]` <br>
+Example for Town01 <br>
+`python ./run_CIL.py --host [serverhostname] -p 2000 -c Town01`
 
 The server and the client should have matching port and city parameters
 For more information on how to run the client and the server, check the
