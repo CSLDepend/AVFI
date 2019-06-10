@@ -63,7 +63,7 @@ Zbigniew T. Kalbarczyk, and Ravishankar K. Iyer. DSN 2018
 
 ```
 @inproceedings{jha2018avfi,
-  title={Avfi: Fault injection for autonomous vehicles},
+  title={AVFI: Fault Injection for Autonomous Vehicles},
   author={Jha, Saurabh and Banerjee, Subho S and Cyriac, James and Kalbarczyk, Zbigniew T and Iyer, Ravishankar K},
   booktitle={2018 48th Annual IEEE/IFIP International Conference on Dependable Systems and Networks Workshops (DSN-W)},
   pages={55--56},
