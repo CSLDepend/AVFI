@@ -1,4 +1,4 @@
-FROM nvidia/cuda-ppc64le:9.0-cudnn7-runtime-ubuntu16.04
+FROM nvidia/cuda:9.0-cudnn7-runtime-ubuntu16.04
 
 # Install python3 + dependencies
 RUN apt update && \
@@ -10,12 +10,12 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/*
 
 # Install tensorflow
-RUN curl -LO https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-ppc64le.sh && \
-    bash Miniconda3-latest-Linux-ppc64le.sh -p /miniconda -b && \
-    rm Miniconda3-latest-Linux-ppc64le.sh
+RUN curl -LO https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+    bash Miniconda3-latest-Linux-x86_64.sh -p /miniconda -b && \
+    rm Miniconda3-latest-Linux-x86_64.sh
 ENV PATH=/miniconda/bin:${PATH}
 RUN conda update -y conda && \
-    conda install -y tensorflow-gpu scipy
+    conda install -y python=3.6 tensorflow-gpu scipy
 
 # Install CARLA agent
 RUN git clone https://github.com/carla-simulator/carla.git
